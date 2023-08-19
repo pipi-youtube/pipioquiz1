@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二択クイズアプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>二択クイズ</h1>
+        <p id="question">質問がここに表示されます</p>
+        <button id="choiceA">選択肢A</button>
+        <button id="choiceB">選択肢B</button>
+        <p id="result"></p>
+    </div>
+    <script>
+        const questionElement = document.getElementById("question");
+        const choiceAElement = document.getElementById("choiceA");
+        const choiceBElement = document.getElementById("choiceB");
+        const resultElement = document.getElementById("result");
+
+        const quizData = [
+            {
+                question: "日本の首都は？",
+                choiceA: "東京",
+                choiceB: "京都",
+                correct: "A"
+            },
+            {
+                question: "最も高い山は？",
+                choiceA: "エベレスト",
+                choiceB: "富士山",
+                correct: "B"
+            },
+            {
+                question: "太陽の色は？",
+                choiceA: "黄色",
+                choiceB: "赤",
+                correct: "A"
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function showQuestion() {
+            const currentQuiz = quizData[currentQuestion];
+            questionElement.textContent = currentQuiz.question;
+            choiceAElement.textContent = currentQuiz.choiceA;
+            choiceBElement.textContent = currentQuiz.choiceB;
+        }
+
+        function checkAnswer(answer) {
+            const currentQuiz = quizData[currentQuestion];
+            if (answer === currentQuiz.correct) {
+                resultElement.textContent = "正解！";
+            } else {
+                resultElement.textContent = "不正解...";
+            }
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                questionElement.textContent = "クイズ終了！";
+                choiceAElement.style.display = "none";
+                choiceBElement.style.display = "none";
+            }
+        }
+
+        choiceAElement.addEventListener("click", () => checkAnswer("A"));
+        choiceBElement.addEventListener("click", () => checkAnswer("B"));
+
+        showQuestion();
+    </script>
+</body>
+</html>
